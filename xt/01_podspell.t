@@ -31,6 +31,11 @@ all_pod_files_spelling_ok('lib');
 
 __DATA__
 WWW::Google::Cloud::Messaging
+GCM
+JSON
+API
+Str
+ua
 
 # personal section
 xaicron
