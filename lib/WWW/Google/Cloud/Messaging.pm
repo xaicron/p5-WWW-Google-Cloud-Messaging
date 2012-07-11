@@ -31,7 +31,7 @@ sub new {
 
 sub send {
     my ($self, $payload) = @_;
-    croak 'payload must be HASH ref' unless ref $payload;
+    croak 'Usage: $gcm->send(\%payload)' unless ref $payload;
 
     if (exists $payload->{delay_while_idle}) {
         $payload->{delay_while_idle} = $payload->{delay_while_idle} ? JSON::true : JSON::false;

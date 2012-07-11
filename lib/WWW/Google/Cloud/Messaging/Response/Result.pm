@@ -9,7 +9,7 @@ sub new {
 }
 
 sub is_success {
-    shift->error ? 1 : 0;
+    shift->error ? 0 : 1;
 }
 
 sub has_canonical_id {

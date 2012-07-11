@@ -37,7 +37,7 @@ sub is_success {
     shift->{is_success};
 }
 
-for my $method (qw{success failture multicast_id canonical_ids error}) {
+for my $method (qw{success failure multicast_id canonical_ids error}) {
     no strict 'refs';
     *{$method} = sub {
         use strict;
@@ -53,10 +53,10 @@ sub results {
 
 sub DESTROY  {}
 sub AUTOLOAD {
-    my $self = shift;
     (my $method = our $AUTOLOAD) =~ s/.*:://;
     no strict 'refs';
     *{$AUTOLOAD} = sub {
+        use strict;
         my $self = shift;
         $self->{http_response}->$method(@_);
     };
@@ -81,7 +81,7 @@ WWW::Google::Cloud::Messaging::Response - An accessor of GCM response data
 
   say $res->multicast_id;
   say $res->success;
-  say $res->failture;
+  say $res->failure;
   say $res->canonical_ids;
 
   # get WWW::Google::Cloud::Messaging::Response::ResultSet
