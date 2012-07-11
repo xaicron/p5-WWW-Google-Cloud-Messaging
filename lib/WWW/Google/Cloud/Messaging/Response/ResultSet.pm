@@ -3,6 +3,8 @@ package WWW::Google::Cloud::Messaging::Response::ResultSet;
 use strict;
 use warnings;
 
+use WWW::Google::Cloud::Messaging::Response::Result;
+
 sub new {
     my ($class, $results, $reg_ids) = @_;
     bless {

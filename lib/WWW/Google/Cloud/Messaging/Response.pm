@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use JSON qw(decode_json);
 
+use WWW::Google::Cloud::Messaging::Response::ResultSet;
+
 sub new {
     my ($class, $http_response) = @_;
 
