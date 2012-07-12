@@ -21,25 +21,67 @@ sub get_request_data {
     decode_json +$req->content;
 }
 
-sub create_response_content {
-    my %args = @_;
-    return {
-        multicast_id  => 12345,
-        success       => 1,
-        failure       => 0,
-        canonical_ids =>0,
-        results       => [],
-        %args,
-    };
-}
-
 sub create_response {
-    my ($code, $content) = @_;
-    $content = encode_json $content;
+    my ($code, $data, $headers) = @_;
+    my $content = eval { encode_json $data } || $data;
     return [$code => [
         'Content-Length' => length($content),
         'Content-Type'   => 'application/json; charset=UTF-8',
+        @{ $headers || [] },
     ], [$content]];
+}
+
+sub test_send {
+    my %specs = @_;
+    my ($input, $expects, $desc) = @specs{qw/input expects desc/};
+
+    subtest $desc => sub {
+        my $gcm   = new_gcm();
+        my $httpd = run_http_server {
+            my $req = shift;
+            my $params = get_request_data($req);
+            is_deeply $params, $input;
+
+            is $req->header('Content-Type'), 'application/json; charset=UTF-8';
+            is $req->header('Authorization'), sprintf 'key=%s', $gcm->api_key;
+
+            return create_response(@$expects{qw/code data headers/});
+        };
+
+        $gcm->api_url($httpd->endpoint);
+
+        my $res = $gcm->send($input);
+
+        $expects->{data} = { error => $expects->{data} } unless ref $expects->{data};
+        is $res->is_success,    $res->http_response->is_success;
+        is $res->error,         $expects->{data}{error};
+        is $res->success,       $expects->{data}{success};
+        is $res->failure,       $expects->{data}{failure};
+        is $res->canonical_ids, $expects->{data}{canonical_ids};
+        is $res->multicast_id,  $expects->{data}{multicast_id};
+
+        isa_ok $res->http_response, 'HTTP::Response';
+        is $res->status_line,   $res->http_response->status_line;
+
+        return if $expects->{data}{error};
+
+        my $results = $res->results;
+        isa_ok $results, 'WWW::Google::Cloud::Messaging::Response::ResultSet';
+
+        my $expects_results = $expects->{data}{results};
+        my $target_reg_ids  = $input->{registration_ids} || [];
+        while (my $result = $results->next) {
+            isa_ok $result, 'WWW::Google::Cloud::Messaging::Response::Result';
+
+            my $expects_result = shift @$expects_results;
+            is $result->is_success,       $expects_result->{error} ? 0 : 1;
+            is $result->error,            $expects_result->{error};
+            is $result->has_canonical_id, $expects_result->{registration_id} ? 1 : 0;
+            is $result->registration_id,  $expects_result->{registration_id};
+            is $result->message_id,       $expects_result->{message_id};
+            is $result->target_reg_id,    shift @$target_reg_ids;
+        }
+    };
 }
 
 subtest 'required payload' => sub {
@@ -54,56 +96,120 @@ subtest 'payload must be hashref' => sub {
     }
 };
 
-subtest 'send a message' => sub {
-    my $httpd = run_http_server {
-        my $req = shift;
+test_send(
+    desc  => 'send a message',
+    input => {
+        send_data => {
+            registration_ids => [qw/foo/],
+            collapse_key     => 'collapse_key',
+            data             => {
+                message => 'メッセージ', 
+            },
+        },
+    },
+    expects => {
+        code => 200,
+        data => {
+            success       => 1,
+            failure       => 0,
+            canonical_ids => 0,
+            multicast_id  => 12345,
+            results       => [
+                { message_id => 56789 },
+            ],
+        },
+    },
+);
 
-        my $params = get_request_data +$req;
-        is_deeply $params, {
-            registration_ids => ['foo'],
+test_send(
+    desc  => 'send multicast',
+    input => {
+        send_data => {
+            registration_ids => [qw/foo bar/],
+            collapse_key     => 'collapse_key',
+            data             => {
+                message => 'メッセージ', 
+            },
+        },
+    },
+    expects => {
+        code => 200,
+        data => {
+            success       => 2,
+            failure       => 0,
+            canonical_ids => 0,
+            multicast_id  => 12345,
+            results       => [
+                { message_id => 56789 },
+                { message_id => 67890 },
+            ],
+        },
+    },
+);
+
+test_send(
+    desc  => 'return error',
+    input => {
+        send_data => {},
+    },
+    expects => {
+        code    => 400,
+        data    => qq{Missing "registration_ids" field\n},
+        headers => [
+            'Content-Type' => 'text/plain; charset=UTF-8',
+        ],
+    },
+);
+
+test_send(
+    desc  => 'multicast mixied success / error response',
+    input => {
+        send_data => {
+            registration_ids => [qw/foo bar/],
             collapse_key     => 'collapse_key',
             data             => {
                 message => 'メッセージ',
             },
-        };
-
-        is $req->header('Content-Type'), 'application/json; charset=UTF-8';
-        is $req->header('Authorization'), 'key=api_key';
-
-        my $content = create_response_content(results => [
-            { message_id => 123456789 },
-        ]);
-        return create_response(200 => $content);
-    };
-    
-    my $res = new_gcm(api_url => $httpd->endpoint)->send({
-        registration_ids => [qw/foo/],
-        collapse_key     => 'collapse_key',
-        data             => {
-            message => 'メッセージ',
         },
-    });
+    },
+    expects => {
+        code => 200,
+        data => {
+            success       => 1,
+            failure       => 1,
+            canonical_ids => 0,
+            multicast_id  => 12345,
+            results       => [
+                { message_id => 56789 },
+                { error => 'InvalidRegistration' },
+            ],
+        },
+    },
+);
 
-    ok $res->is_success;
-    ok !$res->error;
-    is $res->success, 1;
-    is $res->failure, 0;
-    is $res->canonical_ids, 0;
-    is $res->multicast_id, 12345;
-    isa_ok $res->http_response, 'HTTP::Response';
-    is $res->status_line, $res->http_response->status_line;
-
-    my $results = $res->results;
-    isa_ok $results, 'WWW::Google::Cloud::Messaging::Response::ResultSet';
-    while (my $result = $results->next) {
-        isa_ok $result, 'WWW::Google::Cloud::Messaging::Response::Result';
-        ok $result->is_success;
-        ok !$result->error;
-        ok !$result->has_canonical_id;
-        ok !$result->registration_id;
-        is $result->message_id, 123456789;
-        is $result->target_reg_id, 'foo';
-    }
-};
+test_send(
+    desc  => 'return with registration_id',
+    input => {
+        send_data => {
+            registration_ids => [qw/foo/],
+            collapse_key     => 'collapse_key',
+            data             => {
+                message => 'メッセージ',
+            },
+        },
+    },
+    expects => {
+        code => 200,
+        data => {
+            success       => 1,
+            failure       => 0,
+            canonical_ids => 0,
+            multicast_id  => 12345,
+            results       => [
+                { message_id => 56789, registration_id => 'baz' },
+            ],
+        },
+    },
+);
 
 done_testing;
