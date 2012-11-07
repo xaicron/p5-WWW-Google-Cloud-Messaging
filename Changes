@@ -1,4 +1,7 @@
 Revision history for Perl extension WWW::Google::Cloud::Messaging
 
+0.02  Wed Nov  7 19:15:47 2012
+    - fixed constants
+
 0.01  Thu Jul 12 23:13:12 2012
     - original version
