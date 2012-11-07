@@ -12,13 +12,13 @@ our @EXPORT = qw{
     MessageTooBig
 };
 
-use constant (
+use constant {
     MissingRegistration => 'MissingRegistration',
     InvalidRegistration => 'InvalidRegistration',
-    MismatchSenderId    => 'MismatchSenderId'.
+    MismatchSenderId    => 'MismatchSenderId',
     NotRegistered       => 'NotRegistered',
     MessageTooBig       => 'MessageTooBig',
-);
+};
 
 1;
 
