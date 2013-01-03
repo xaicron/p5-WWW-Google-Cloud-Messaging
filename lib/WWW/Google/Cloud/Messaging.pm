@@ -88,18 +88,18 @@ WWW::Google::Cloud::Messaging - Google Cloud Messaging (GCM) Client Library
 
       if ($result->has_canonical_id) {
           say sprintf 'reg_id %s is old! refreshed reg_id is %s',
-              $reg_id, $result->registration_id;'
+              $reg_id, $result->registration_id;
       }
   }
 
 =head1 DESCRIPTION
 
-WWW::Google::Cloud::Messaging is Google Cloud Messaging (GCM) Client Library.
+WWW::Google::Cloud::Messaging is a Google Cloud Messaging (GCM) client library,
+which implements web application servers.
 
-Currently support JSON API only.
+Currently this supports JSON API.
 
 SEE ALSO L<< http://developer.android.com/guide/google/gcm/gcm.html#send-msg >>.
-
 =head1 METHODS
 
 =head2 new(%args)
@@ -114,9 +114,9 @@ Supported options are:
 
 =item api_key : Str
 
-Required. Sets your API key.
+Required. Set your API key.
 
-For information obtaining API key, please check L<< http://developer.android.com/guide/google/gcm/gs.html#access-key >>.
+For more information, please check L<< http://developer.android.com/guide/google/gcm/gs.html#access-key >>.
 
 =item api_url : Str
 
@@ -124,7 +124,7 @@ Optional. Default values is C<< $WWW::Google::Cloud::Messaging::API_URL >>.
 
 =item ua : LWP::UserAgent
 
-Optional. Sets custom LWP::UserAgent instance.
+Optional. Set a custom LWP::UserAgent instance if needed.
 
 =back
 
@@ -142,7 +142,41 @@ Send message to GCM. Returned C<< WWW::Google::Cloud::Messaging::Response >> ins
       },
   });
 
-For more information, SEE ALSO L<< http://developer.android.com/guide/google/gcm/gcm.html#send-msg >>.
+The possible options are as follows:
+
+=over
+
+=item registration_ids : ArrayRef
+
+A string array with the list of devices (registration IDs) receiving the message. It must contain at least 1 and at most 1000 registration IDs. To send a multicast message, you must use JSON. For sending a single message to a single device, you could use a JSON object with just 1 registration id, or plain text (see below). Required.
+
+=item collapse_key : Str
+
+An arbitrary string (such as "Updates Available") that is used to collapse a group of like messages when the device is offline, so that only the last message gets sent to the client. This is intended to avoid sending too many messages to the phone when it comes back online. Note that since there is no guarantee of the order in which messages get sent, the "last" message may not actually be the last message sent by the application server. See Advanced Topics for more discussion of this topic. Optional.
+
+=item data : Str
+
+A JSON-serializable object whose fields represents the key-value pairs of the message's payload data. Optional.
+
+=item delay_while_idle : Boolean
+
+If included, indicates that the message should not be sent immediately if the device is idle. The server will wait for the device to become active, and then only the last message for each collapse_key value will be sent. Optional. The default value is false, and must be a JSON boolean.
+
+=item time_to_live : Int
+
+How long (in seconds) the message should be kept on GCM storage if the device is offline. Optional (default time-to-live is 4 weeks, and must be set as a JSON number).
+
+=item restricted_package_name : Str
+
+A string containing the package name of your application. When set, messages will only be sent to registration IDs that match the package name. Optional.
+
+=item dry_run : Boolean
+
+If included, allows developers to test their request without actually sending a message. Optional. The default value is false, and must be a JSON boolean.
+
+=back
+
+The above is just a copy of the official GCM description and so could be old. You should check the latest information in L<< http://developer.android.com/guide/google/gcm/gcm.html#send-msg >>.
 
 =head1 AUTHOR
 
