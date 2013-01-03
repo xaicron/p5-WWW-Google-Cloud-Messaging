@@ -7,6 +7,7 @@ all_from 'lib/WWW/Google/Cloud/Messaging.pm';
 requires 'Class::Accessor::Lite';
 requires 'JSON';
 requires 'LWP::UserAgent';
+requires 'LWP::Protocol::https';
 requires 'HTTP::Request';
 
 test_requires 'Test::More', 0.98;
