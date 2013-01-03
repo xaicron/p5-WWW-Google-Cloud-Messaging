@@ -1,5 +1,9 @@
 Revision history for Perl extension WWW::Google::Cloud::Messaging
 
+0.03  Thu Jan  3 13:40:04 2013
+    - wrote docs (gfx++)
+    - add LWP::Protocol::https to the dependencies (gfx++)
+
 0.02  Wed Nov  7 19:15:47 2012
     - fixed constants
 

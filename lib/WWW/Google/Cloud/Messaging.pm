@@ -15,7 +15,7 @@ use Class::Accessor::Lite (
 
 use WWW::Google::Cloud::Messaging::Response;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 our $API_URL = 'https://android.googleapis.com/gcm/send';
 
