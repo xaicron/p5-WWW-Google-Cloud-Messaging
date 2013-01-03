@@ -36,6 +36,7 @@ JSON
 API
 Str
 ua
+IDs
 
 # personal section
 xaicron
