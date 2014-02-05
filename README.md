@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/xaicron/p5-WWW-Google-Cloud-Messaging.png?branch=master)](https://travis-ci.org/xaicron/p5-WWW-Google-Cloud-Messaging)
 # NAME
 
 WWW::Google::Cloud::Messaging - Google Cloud Messaging (GCM) Client Library
