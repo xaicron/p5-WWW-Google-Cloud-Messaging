@@ -10,6 +10,11 @@ our @EXPORT = qw{
     InvalidRegistration
     NotRegistered
     MessageTooBig
+    InvalidDataKey
+    InvalidTtl
+    Unavailable
+    InternalServerError
+    InvalidPackageName
 };
 
 use constant {
@@ -18,6 +23,11 @@ use constant {
     MismatchSenderId    => 'MismatchSenderId',
     NotRegistered       => 'NotRegistered',
     MessageTooBig       => 'MessageTooBig',
+    InvalidDataKey      => 'InvalidDataKey',
+    InvalidTtl          => 'InvalidTtl',
+    Unavailable         => 'Unavailable',
+    InternalServerError => 'InternalServerError',
+    InvalidPackageName  => 'InvalidPackageName',
 };
 
 1;
@@ -43,6 +53,16 @@ WWW::Google::Cloud::Messaging::Constants - constants for WWW::Google::Cloud::Mes
 =head2 C<< NotRegistered >>
 
 =head2 C<< MessageTooBig >>
+
+=head2 C<< InvalidDataKey >>
+
+=head2 C<< InvalidTtl >>
+
+=head2 C<< Unavailable >>
+
+=head2 C<< InternalServerError >>
+
+=head2 C<< InvalidPackageName >>
 
 =head1 AUTHOR
 
