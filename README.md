@@ -45,7 +45,8 @@ which implements web application servers.
 Currently this supports JSON API.
 
 SEE ALSO [http://developer.android.com/guide/google/gcm/gcm.html#send-msg](http://developer.android.com/guide/google/gcm/gcm.html#send-msg).
-=head1 METHODS
+
+# METHODS
 
 ## new(%args)
 

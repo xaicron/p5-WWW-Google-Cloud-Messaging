@@ -100,6 +100,7 @@ which implements web application servers.
 Currently this supports JSON API.
 
 SEE ALSO L<< http://developer.android.com/guide/google/gcm/gcm.html#send-msg >>.
+
 =head1 METHODS
 
 =head2 new(%args)
