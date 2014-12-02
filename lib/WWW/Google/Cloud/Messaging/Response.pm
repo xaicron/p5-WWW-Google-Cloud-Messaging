@@ -108,6 +108,8 @@ Returns error message if failure of the request.
 
 =head2 multicast_id()
 
+A unique ID identifying this multicast message.
+
 =head2 success()
 
 Number of messages that were processed without an error.
