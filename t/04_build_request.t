@@ -27,15 +27,6 @@ subtest 'payload must be hashref' => sub {
     }
 };
 
-#    if (exists $payload->{delay_while_idle}) {
-#        $payload->{delay_while_idle} = $payload->{delay_while_idle} ? JSON::true : JSON::false;
-#    }
-#
-#    my $req = HTTP::Request->new(POST => $self->api_url);
-#    $req->header(Authorization  => 'key='.$self->api_key);
-#    $req->header('Content-Type' => 'application/json; charset=UTF-8');
-#    $req->content(encode_json $payload);
-
 subtest 'request correctly built' => sub {
     my $payload = { key1 => 1, key2 => 2, delay_while_idle => 2 };
     my $req = new_gcm->build_request($payload);
