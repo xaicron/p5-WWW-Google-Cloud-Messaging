@@ -95,8 +95,8 @@ WWW::Google::Cloud::Messaging::Response is an accessor of GCM response data.
 
 =head2 new($http_response)
 
-Create a WWW::Google::Cloud::Messaging::Response.
-This method used on L<< WWW::Google::Cloud::Messaging >> internal.
+Create a WWW::Google::Cloud::Messaging::Response.  This method used in L<<
+WWW::Google::Cloud::Messaging >> internally if C<< send >> method is used.
 
 =head2 is_success()
 
