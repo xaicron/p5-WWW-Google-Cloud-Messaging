@@ -2,6 +2,10 @@ Revision history for Perl extension WWW::Google::Cloud::Messaging
 
 {{$NEXT}}
 
+0.05 2015-07-14T02:26:08Z
+    - fixed pod (#2 perlDreamer++)
+    - build_request method is really performs the build only (#3 okxchg++)
+
 0.04 2014-02-05T13:27:53Z
     - fixed pod
     - added some constants

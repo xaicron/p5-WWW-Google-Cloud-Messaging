@@ -71,12 +71,12 @@
          "web" : "https://github.com/xaicron/p5-WWW-Google-Cloud-Messaging"
       }
    },
-   "version" : "0.04",
+   "version" : "0.05",
    "x_contributors" : [
       "Fuji, Goro <g.psy.va@gmail.com>",
       "Colin Kuskie <colink@perldreamer.com>",
       "Oliver Kindernay <kindernay@dispecer.sk>",
-      "Yuji Shimada <xaicron@gmail.com>"
+      "xaicron <xaicron@gmail.com>"
    ],
    "x_serialization_backend" : "JSON::PP version 2.27300"
 }
