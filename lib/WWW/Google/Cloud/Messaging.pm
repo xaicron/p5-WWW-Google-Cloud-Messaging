@@ -182,11 +182,11 @@ A string containing the package name of your application. When set, messages wil
 
 If included, allows developers to test their request without actually sending a message. Optional. The default value is false, and must be a JSON boolean.
 
+=back
+
 =head2 send(\%payload)
 
 Build request using C<build_request> and send message to GCM. Returns C<< WWW::Google::Cloud::Messaging::Response >> instance.
-
-=back
 
 The above is just a copy of the official GCM description and so could be old. You should check the latest information in L<< http://developer.android.com/guide/google/gcm/gcm.html#send-msg >>.
 
