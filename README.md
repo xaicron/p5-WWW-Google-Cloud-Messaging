@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/xaicron/p5-WWW-Google-Cloud-Messaging.png?branch=master)](https://travis-ci.org/xaicron/p5-WWW-Google-Cloud-Messaging)
+[![Build Status](https://travis-ci.org/xaicron/p5-WWW-Google-Cloud-Messaging.svg?branch=master)](https://travis-ci.org/xaicron/p5-WWW-Google-Cloud-Messaging)
 # NAME
 
 WWW::Google::Cloud::Messaging - Google Cloud Messaging (GCM) Client Library
@@ -71,9 +71,10 @@ Supported options are:
 
     Optional. Set a custom LWP::UserAgent instance if needed.
 
-## send(\\%payload)
+## build\_request(\\%payload)
 
-Send message to GCM. Returned `WWW::Google::Cloud::Messaging::Response` instance.
+Returns HTTP::Request suitable for sending with arbitrary HTTP client avalaible
+on CPAN. Response can than be decoded using `WWW::Google::Cloud::Messaging::Response`.
 
     my $res = $gcm->send({
         registration_ids => [ $reg_id ], # must be arrayref
@@ -114,6 +115,10 @@ The possible options are as follows:
 - dry\_run : Boolean
 
     If included, allows developers to test their request without actually sending a message. Optional. The default value is false, and must be a JSON boolean.
+
+## send(\\%payload)
+
+Build request using `build_request` and send message to GCM. Returns `WWW::Google::Cloud::Messaging::Response` instance.
 
 The above is just a copy of the official GCM description and so could be old. You should check the latest information in [http://developer.android.com/guide/google/gcm/gcm.html#send-msg](http://developer.android.com/guide/google/gcm/gcm.html#send-msg).
 
