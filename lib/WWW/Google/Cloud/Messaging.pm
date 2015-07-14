@@ -31,7 +31,15 @@ sub new {
 
 sub send {
     my ($self, $payload) = @_;
-    croak 'Usage: $gcm->send(\%payload)' unless ref $payload;
+    croak 'Usage: $gcm->send(\%payload)' unless ref $payload eq 'HASH';
+
+    my $res = $self->ua->request($self->build_request($payload));
+    return WWW::Google::Cloud::Messaging::Response->new($res);
+}
+
+sub build_request {
+    my ($self, $payload) = @_;
+    croak 'Usage: $gcm->build_request(\%payload)' unless ref $payload eq 'HASH';
 
     if (exists $payload->{delay_while_idle}) {
         $payload->{delay_while_idle} = $payload->{delay_while_idle} ? JSON::true : JSON::false;
@@ -41,9 +49,7 @@ sub send {
     $req->header(Authorization  => 'key='.$self->api_key);
     $req->header('Content-Type' => 'application/json; charset=UTF-8');
     $req->content(encode_json $payload);
-
-    my $res = $self->ua->request($req);
-    return WWW::Google::Cloud::Messaging::Response->new($res);
+    return $req;
 }
 
 1;
@@ -129,9 +135,10 @@ Optional. Set a custom LWP::UserAgent instance if needed.
 
 =back
 
-=head2 send(\%payload)
+=head2 build_request(\%payload)
 
-Send message to GCM. Returned C<< WWW::Google::Cloud::Messaging::Response >> instance.
+Returns HTTP::Request suitable for sending with arbitrary HTTP client avalaible
+on CPAN. Response can than be decoded using C<< WWW::Google::Cloud::Messaging::Response >>.
 
   my $res = $gcm->send({
       registration_ids => [ $reg_id ], # must be arrayref
@@ -174,6 +181,10 @@ A string containing the package name of your application. When set, messages wil
 =item dry_run : Boolean
 
 If included, allows developers to test their request without actually sending a message. Optional. The default value is false, and must be a JSON boolean.
+
+=head2 send(\%payload)
+
+Build request using C<build_request> and send message to GCM. Returns C<< WWW::Google::Cloud::Messaging::Response >> instance.
 
 =back
 

@@ -91,7 +91,7 @@ subtest 'required payload' => sub {
 
 subtest 'payload must be hashref' => sub {
     for my $payload ('foo', [], undef) {
-        eval { new_gcm->send('foo') };
+        eval { new_gcm->send($payload) };
         like $@, qr/Usage: \$gcm->send\(\\%payload\)/;
     }
 };
