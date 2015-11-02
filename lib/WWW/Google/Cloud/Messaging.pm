@@ -6,6 +6,7 @@ use 5.008_001;
 
 use Carp qw(croak);
 use LWP::UserAgent;
+use LWP::ConnCache;
 use HTTP::Request;
 use JSON qw(encode_json);
 use Class::Accessor::Lite (
@@ -23,7 +24,7 @@ sub new {
     my ($class, %args) = @_;
     croak 'Usage: WWW::Google::Cloud::Messaging->new(api_key => $api_key)' unless defined $args{api_key};
 
-    $args{ua}      ||= LWP::UserAgent->new(agent => __PACKAGE__.'/'.$VERSION);
+    $args{ua}      ||= LWP::UserAgent->new(agent => __PACKAGE__.'/'.$VERSION, conn_cache => LWP::ConnCache->new);
     $args{api_url} ||= $API_URL;
 
     bless { %args }, $class;
