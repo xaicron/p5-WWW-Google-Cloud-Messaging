@@ -2,6 +2,10 @@ Revision history for Perl extension WWW::Google::Cloud::Messaging
 
 {{$NEXT}}
 
+0.06 2015-11-02T11:41:47Z
+    - Changed API_URL (https://developers.google.com/cloud-messaging/http)
+    - Persistent connection for default
+
 0.05 2015-07-14T02:26:08Z
     - fixed pod (#2 perlDreamer++)
     - build_request method is really performs the build only (#3 okxchg++)

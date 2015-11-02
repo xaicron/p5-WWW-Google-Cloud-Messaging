@@ -16,7 +16,7 @@ use Class::Accessor::Lite (
 
 use WWW::Google::Cloud::Messaging::Response;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 our $API_URL = 'https://gcm-http.googleapis.com/gcm/send';
 

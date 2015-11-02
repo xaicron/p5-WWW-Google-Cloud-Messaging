@@ -4,7 +4,7 @@
       "xaicron <xaicron@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.4.1, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Minilla/v2.5.0, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -71,12 +71,12 @@
          "web" : "https://github.com/xaicron/p5-WWW-Google-Cloud-Messaging"
       }
    },
-   "version" : "0.05",
+   "version" : "0.06",
    "x_contributors" : [
       "Fuji, Goro <g.psy.va@gmail.com>",
       "Colin Kuskie <colink@perldreamer.com>",
       "Oliver Kindernay <kindernay@dispecer.sk>",
       "xaicron <xaicron@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.27300"
+   "x_serialization_backend" : "JSON::PP version 2.27202"
 }
