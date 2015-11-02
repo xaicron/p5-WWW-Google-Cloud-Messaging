@@ -17,7 +17,7 @@ use WWW::Google::Cloud::Messaging::Response;
 
 our $VERSION = '0.05';
 
-our $API_URL = 'https://android.googleapis.com/gcm/send';
+our $API_URL = 'https://gcm-http.googleapis.com/gcm/send';
 
 sub new {
     my ($class, %args) = @_;
