@@ -2,7 +2,6 @@ use strict;
 use warnings;
 use utf8;
 use Test::More;
-use Test::Flatten;
 use Test::SharedFork;
 use Test::Fake::HTTPD;
 use JSON;

@@ -29,7 +29,6 @@
       "build" : {
          "requires" : {
             "Test::Fake::HTTPD" : "0.03",
-            "Test::Flatten" : "0.09",
             "Test::More" : "0.98",
             "Test::SharedFork" : "0.2"
          }
