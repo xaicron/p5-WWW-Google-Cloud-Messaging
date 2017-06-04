@@ -1,4 +1,4 @@
---exec "perl -Ilib -MTest::Flatten -MTest::Name::FromLine"
+--exec "perl -Ilib -MTest::Name::FromLine"
 --timer
 --merge
 --trap
