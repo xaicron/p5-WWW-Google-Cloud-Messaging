@@ -4,13 +4,13 @@
       "xaicron <xaicron@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.5.0, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Minilla/v3.0.11, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "WWW-Google-Cloud-Messaging",
    "no_index" : {
@@ -35,7 +35,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build::Tiny" : "0.035"
          }
       },
       "develop" : {
@@ -75,7 +75,8 @@
       "Fuji, Goro <g.psy.va@gmail.com>",
       "Colin Kuskie <colink@perldreamer.com>",
       "Oliver Kindernay <kindernay@dispecer.sk>",
+      "Stefan Seifert <nine@detonation.org>",
       "xaicron <xaicron@gmail.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 2.27202"
+   "x_serialization_backend" : "JSON::PP version 2.94"
 }
