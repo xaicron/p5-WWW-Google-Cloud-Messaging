@@ -7,6 +7,7 @@ use 5.008_001;
 use Carp qw(croak);
 use LWP::UserAgent;
 use LWP::ConnCache;
+use LWP::Protocol::https;
 use HTTP::Request;
 use JSON qw(encode_json);
 use Class::Accessor::Lite (

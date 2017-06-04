@@ -46,6 +46,7 @@
             "HTTP::Request" : "0",
             "JSON" : "0",
             "LWP::ConnCache" : "0",
+            "LWP::Protocol::https" : "0",
             "LWP::UserAgent" : "0",
             "perl" : "5.008001"
          }
