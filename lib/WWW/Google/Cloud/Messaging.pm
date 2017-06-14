@@ -142,7 +142,7 @@ Optional. Set a custom LWP::UserAgent instance if needed.
 Returns HTTP::Request suitable for sending with arbitrary HTTP client avalaible
 on CPAN. Response can than be decoded using C<< WWW::Google::Cloud::Messaging::Response >>.
 
-  my $res = $gcm->send({
+  my $req = $gcm->build_request({
       registration_ids => [ $reg_id ], # must be arrayref
       collapse_key     => '...',
       data             => {
